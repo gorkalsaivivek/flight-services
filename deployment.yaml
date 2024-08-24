@@ -7,7 +7,7 @@ spec:
     app: flight-services
   ports:
     - protocol: TCP
-      port: 7000
+      port: 8000
       #nodePort: 30084
   type: LoadBalancer
 ---
@@ -38,3 +38,10 @@ spec:
         - name: flight-services
           image: 7039402000/flight-services:latest
           imagePullPolicy: Always
+          env:
+          - name: DB_URL
+            value: jdbc:mysql://mysql-service:3306/reservation
+          - name: DB_USERNAME
+            value: admin
+          - name: DB_PASSWORD
+            value: admin
