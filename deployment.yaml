@@ -1,0 +1,40 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: flight-services
+spec:
+  selector:
+    app: flight-services
+  ports:
+    - protocol: TCP
+      port: 7000
+      #nodePort: 30084
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-services
+spec:
+  selector:
+    matchLabels:
+      app: flight-services
+  replicas: 2
+  minReadySeconds: 45
+  selector:
+    matchLabels:
+      app: flight-services
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: flight-services
+    spec:
+      containers:
+        - name: flight-services
+          image: 7039402000/flight-services:latest
+          imagePullPolicy: Always
