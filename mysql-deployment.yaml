@@ -9,7 +9,7 @@ spec:
     - protocol: TCP
       port: 3306
       targetPort: 3306
-  type: LoadBalancer
+  type: ClusterIP
 
 ---
 apiVersion: apps/v1
@@ -31,7 +31,7 @@ spec:
         image: mysql:5.7
         env:
         - name: MYSQL_ROOT_PASSWORD
-          value: admin
+          value: infy1234
         - name: MYSQL_DATABASE
           value: reservation
         - name: MYSQL_USER
